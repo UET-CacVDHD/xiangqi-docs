@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="railroad-diagram" width="357" height="212" viewBox="0 0 357 212">
+<defs><style type="text/css"><![CDATA[ svg.railroad-diagram {
+  background-color: hsl(30,20%,95%);
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: black;
+  fill: none;
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  cursor: pointer;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+  stroke: black;
+  fill: hsl(120,100%,90%);
+}
+ ]]></style></defs>
+<g transform="translate(.5 .5)">
+<path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 31h0"></path>
+<path d="M316 31h0"></path>
+<path d="M40 31h20"></path>
+<g>
+<path d="M60 31h8"></path>
+<path d="M288 31h8"></path>
+<rect x="68" y="20" width="220" height="22"></rect>
+<text x="178" y="35">standard&#95;movement&#95;command</text>
+</g>
+<path d="M296 31h20"></path>
+<path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 61h8"></path>
+<path d="M288 61h8"></path>
+<rect x="68" y="50" width="220" height="22"></rect>
+<text x="178" y="65">extended&#95;movement&#95;command</text>
+</g>
+<path d="M296 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path>
+<path d="M40 31a10 10 0 0 1 10 10v40a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 91h12"></path>
+<path d="M284 91h12"></path>
+<rect x="72" y="80" width="212" height="22"></rect>
+<text x="178" y="95">extended&#95;capture&#95;command</text>
+</g>
+<path d="M296 91a10 10 0 0 0 10 -10v-40a10 10 0 0 1 10 -10"></path>
+<path d="M40 31a10 10 0 0 1 10 10v70a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 121h20"></path>
+<path d="M276 121h20"></path>
+<rect x="80" y="110" width="196" height="22"></rect>
+<text x="178" y="125">extended&#95;check&#95;command</text>
+</g>
+<path d="M296 121a10 10 0 0 0 10 -10v-70a10 10 0 0 1 10 -10"></path>
+<path d="M40 31a10 10 0 0 1 10 10v100a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 151h0"></path>
+<path d="M296 151h0"></path>
+<rect x="60" y="140" width="236" height="22"></rect>
+<text x="178" y="155">extended&#95;crossriver&#95;command</text>
+</g>
+<path d="M296 151a10 10 0 0 0 10 -10v-100a10 10 0 0 1 10 -10"></path>
+<path d="M40 31a10 10 0 0 1 10 10v130a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 181h60"></path>
+<path d="M236 181h60"></path>
+<rect x="120" y="170" width="116" height="22"></rect>
+<text x="178" y="185">meta&#95;command</text>
+</g>
+<path d="M296 181a10 10 0 0 0 10 -10v-130a10 10 0 0 1 10 -10"></path>
+</g>
+<path d="M 316 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>

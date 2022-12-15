@@ -1,0 +1,416 @@
+---
+slug: /
+---
+
+# Chuẩn các lệnh cờ tướng
+
+## Tổng quan
+
+Cờ tướng là một trò chơi dân gian của Việt Nam, trong đó luật và cú pháp đã được chuẩn hoá bới Liên đoàn cờ tướng Việt Nam ([luật Liên đoàn](https://drive.google.com/file/d/12lfg-VnSdVw5jsbqN-6U2SplMyaT4Ich/view?fbclid=IwAR2GXmnFGt7yNRr02k9uJdwO6G0lRPwddCVifmC0PsP5iL8WeDxSc-76EPY)). Dưới đây là một bộ chuẩn các lệnh, được viết theo cú pháp Parsing Expression Grammar, kế thừa từ bộ luật cờ tướng của Liên đoàn.
+
+Trong chuẩn này, ngoài việc cú pháp tương thích với các lệnh đã nêu ở luật Liên đoàn, chuẩn còn xây dựng thêm các lệnh rút gọn, các lệnh mở rộng, giúp dễ dàng hơn trong việc biến đổi giọng nói sang lệnh cờ tướng, và các lệnh mở rộng được xây dựng để gần với logic tự nhiên hơn.
+
+## Các lệnh cờ tướng
+
+### Lệnh chuẩn
+
+:::info
+
+Trong chuẩn này, lệnh chuẩn được cố gắng làm cho giống nhất với các lệnh trong luật Liên đoàn. Tuy nhiên, vẫn có một thay đổi so với luật gốc để đơn giản hóa việc biến đổi giọng nói sang lệnh cờ tướng.
+
+Thay đổi đó là: **thứ tự của các cột là từ 1 đến 9, xét từ bên trái sang bên phải**. Khác với chuẩn Liên đoàn là _từ 9 đến 1, xét từ bên trái sang bên phải_.
+
+:::
+
+### Lệnh mở rộng: di chuyển
+
+:::info
+Đối với các lệnh mở rộng, có 3 nguyên tắc được tuân theo để xác định nước đi nào sẽ được thực hiện:
+
+1. Nếu lệnh xác định được nhiều hơn 1 khả năng di chuyển → **Không thực hiện lệnh đó**
+2. Nếu chỉ định của lệnh có thể xác định được nhiều hơn 1 quân, tuy nhiên kết quả cuối cùng chỉ là 1 khả năng di chuyển → **Thực hiện lệnh đó**
+3. Các lệnh nếu bỏ qua một vài tham số cụ thể, sẽ chọn tất cả các quân thoả mãn điều kiện. Ví dụ:
+   - Tốt tiến, bên màu đỏ đọc → Chọn tất cả các con tốt bên đỏ → Thực hiện lệnh theo nguyên tắc 1. và 2.
+
+:::
+
+```abnf
+standard_movement_command = "std:" piece vertical_relative_position? column_number movement_direction (column_number / num_of_steps)
+```
+
+```abnf
+vertical_relative_position = front_pos / back_pos / mid_pos / frontmid_pos / backmid_pos
+front_pos = "t"
+back_pos = "s"
+mid_pos = "g"
+frontmid_pos = "tg"
+backmid_pos = "sg"
+```
+
+### Lệnh mở rộng: ăn quân
+
+### Lệnh mở rộng: chiếu tướng
+
+### Lệnh mở rộng: sang sông
+
+### Lệnh meta (siêu lệnh)
+
+## Cú pháp
+
+### start
+
+![start](.\token/start.svg)
+
+### xiangqi_command
+
+![xiangqi_command](.\token/xiangqi_command.svg)
+
+Được sử dụng bởi: [start](#start)
+
+### standard_movement_command
+
+![standard_movement_command](.\token/standard_movement_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### extended_movement_command
+
+![extended_movement_command](.\token/extended_movement_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### extended_capture_command
+
+![extended_capture_command](.\token/extended_capture_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### extended_check_command
+
+![extended_check_command](.\token/extended_check_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### extended_crossriver_command
+
+![extended_crossriver_command](.\token/extended_crossriver_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### meta_command
+
+![meta_command](.\token/meta_command.svg)
+
+Được sử dụng bởi: [xiangqi_command](#xiangqi_command)
+
+### extended_piece_position
+
+![extended_piece_position](.\token/extended_piece_position.svg)
+
+Được sử dụng bởi: [extended_movement_command](#extended_movement_command), [extended_capture_command](#extended_capture_command), [extended_check_command](#extended_check_command), [extended_crossriver_command](#extended_crossriver_command)
+
+### piece
+
+![piece](.\token/piece.svg)
+
+Được sử dụng bởi: [standard_movement_command](#standard_movement_command), [extended_movement_command](#extended_movement_command), [extended_capture_command](#extended_capture_command), [extended_check_command](#extended_check_command)
+
+### general_piece
+
+![general_piece](.\token/general_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### cannon_piece
+
+![cannon_piece](.\token/cannon_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### horse_piece
+
+![horse_piece](.\token/horse_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### elephant_piece
+
+![elephant_piece](.\token/elephant_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### soldier_piece
+
+![soldier_piece](.\token/soldier_piece.svg)
+
+Được sử dụng bởi: [extended_crossriver_command](#extended_crossriver_command), [piece](#piece)
+
+### rook_piece
+
+![rook_piece](.\token/rook_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### advisor_piece
+
+![advisor_piece](.\token/advisor_piece.svg)
+
+Được sử dụng bởi: [piece](#piece)
+
+### vertical_relative_position
+
+![vertical_relative_position](.\token/vertical_relative_position.svg)
+
+Được sử dụng bởi: [standard_movement_command](#standard_movement_command), [extended_relative_position](#extended_relative_position)
+
+### front_pos
+
+![front_pos](.\token/front_pos.svg)
+
+Được sử dụng bởi: [vertical_relative_position](#vertical_relative_position)
+
+### back_pos
+
+![back_pos](.\token/back_pos.svg)
+
+Được sử dụng bởi: [vertical_relative_position](#vertical_relative_position)
+
+### mid_pos
+
+![mid_pos](.\token/mid_pos.svg)
+
+Được sử dụng bởi: [vertical_relative_position](#vertical_relative_position)
+
+### frontmid_pos
+
+![frontmid_pos](.\token/frontmid_pos.svg)
+
+Được sử dụng bởi: [vertical_relative_position](#vertical_relative_position)
+
+### backmid_pos
+
+![backmid_pos](.\token/backmid_pos.svg)
+
+Được sử dụng bởi: [vertical_relative_position](#vertical_relative_position)
+
+### column_number
+
+![column_number](.\token/column_number.svg)
+
+Được sử dụng bởi: [standard_movement_command](#standard_movement_command), [extended_movement_command](#extended_movement_command), [extended_check_command](#extended_check_command), [extended_piece_position](#extended_piece_position)
+
+### num_of_steps
+
+![num_of_steps](.\token/num_of_steps.svg)
+
+Được sử dụng bởi: [standard_movement_command](#standard_movement_command), [extended_movement_command](#extended_movement_command)
+
+### movement_direction
+
+![movement_direction](.\token/movement_direction.svg)
+
+Được sử dụng bởi: [standard_movement_command](#standard_movement_command), [extended_movement_direction](#extended_movement_direction)
+
+### forward_move
+
+![forward_move](.\token/forward_move.svg)
+
+Được sử dụng bởi: [movement_direction](#movement_direction)
+
+### backward_move
+
+![backward_move](.\token/backward_move.svg)
+
+Được sử dụng bởi: [movement_direction](#movement_direction)
+
+### sideways_move
+
+![sideways_move](.\token/sideways_move.svg)
+
+Được sử dụng bởi: [movement_direction](#movement_direction)
+
+### extended_relative_position
+
+![extended_relative_position](.\token/extended_relative_position.svg)
+
+Được sử dụng bởi: [extended_piece_position](#extended_piece_position)
+
+### left_pos
+
+![left_pos](.\token/left_pos.svg)
+
+Được sử dụng bởi: [extended_relative_position](#extended_relative_position)
+
+### right_pos
+
+![right_pos](.\token/right_pos.svg)
+
+Được sử dụng bởi: [extended_relative_position](#extended_relative_position)
+
+### leftmid_pos
+
+![leftmid_pos](.\token/leftmid_pos.svg)
+
+Được sử dụng bởi: [extended_relative_position](#extended_relative_position)
+
+### rightmid_pos
+
+![rightmid_pos](.\token/rightmid_pos.svg)
+
+Được sử dụng bởi: [extended_relative_position](#extended_relative_position)
+
+### extended_movement_direction
+
+![extended_movement_direction](.\token/extended_movement_direction.svg)
+
+Được sử dụng bởi: [extended_movement_command](#extended_movement_command)
+
+### left_move
+
+![left_move](.\token/left_move.svg)
+
+### right_move
+
+![right_move](.\token/right_move.svg)
+
+### forwardleft_move
+
+![forwardleft_move](.\token/forwardleft_move.svg)
+
+Được sử dụng bởi: [extended_movement_direction](#extended_movement_direction)
+
+### forwardright_move
+
+![forwardright_move](.\token/forwardright_move.svg)
+
+Được sử dụng bởi: [extended_movement_direction](#extended_movement_direction)
+
+### backwardleft_move
+
+![backwardleft_move](.\token/backwardleft_move.svg)
+
+Được sử dụng bởi: [extended_movement_direction](#extended_movement_direction)
+
+### backwardright_move
+
+![backwardright_move](.\token/backwardright_move.svg)
+
+Được sử dụng bởi: [extended_movement_direction](#extended_movement_direction)
+
+### piece_tag
+
+![piece_tag](.\token/piece_tag.svg)
+
+Được sử dụng bởi: [extended_piece_position](#extended_piece_position)
+
+### circle_tag
+
+![circle_tag](.\token/circle_tag.svg)
+
+Được sử dụng bởi: [piece_tag](#piece_tag)
+
+### square_tag
+
+![square_tag](.\token/square_tag.svg)
+
+Được sử dụng bởi: [piece_tag](#piece_tag)
+
+### x_tag
+
+![x_tag](.\token/x_tag.svg)
+
+Được sử dụng bởi: [piece_tag](#piece_tag)
+
+### y_tag
+
+![y_tag](.\token/y_tag.svg)
+
+Được sử dụng bởi: [piece_tag](#piece_tag)
+
+### z_tag
+
+![z_tag](.\token/z_tag.svg)
+
+Được sử dụng bởi: [piece_tag](#piece_tag)
+
+### capture_symbol
+
+![capture_symbol](.\token/capture_symbol.svg)
+
+Được sử dụng bởi: [extended_capture_command](#extended_capture_command)
+
+### check_symbol
+
+![check_symbol](.\token/check_symbol.svg)
+
+Được sử dụng bởi: [extended_check_command](#extended_check_command)
+
+### cross_river_symbol
+
+![cross_river_symbol](.\token/cross_river_symbol.svg)
+
+Được sử dụng bởi: [extended_crossriver_command](#extended_crossriver_command)
+
+### indirect_check_specifier
+
+![indirect_check_specifier](.\token/indirect_check_specifier.svg)
+
+Được sử dụng bởi: [check_specifier](#check_specifier)
+
+### direct_check_specifier
+
+![direct_check_specifier](.\token/direct_check_specifier.svg)
+
+Được sử dụng bởi: [check_specifier](#check_specifier)
+
+### check_specifier
+
+![check_specifier](.\token/check_specifier.svg)
+
+Được sử dụng bởi: [extended_check_command](#extended_check_command)
+
+### confirm_symbol
+
+![confirm_symbol](.\token/confirm_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### cancel_symbol
+
+![cancel_symbol](.\token/cancel_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### ask_for_draw_symbol
+
+![ask_for_draw_symbol](.\token/ask_for_draw_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### ask_for_change_side_symbol
+
+![ask_for_change_side_symbol](.\token/ask_for_change_side_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### ask_for_takeback_symbol
+
+![ask_for_takeback_symbol](.\token/ask_for_takeback_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### resign_symbol
+
+![resign_symbol](.\token/resign_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+### new_game_symbol
+
+![new_game_symbol](.\token/new_game_symbol.svg)
+
+Được sử dụng bởi: [meta_command](#meta_command)
+
+```
+
+```
