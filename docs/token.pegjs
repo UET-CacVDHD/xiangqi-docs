@@ -72,9 +72,10 @@ capture_symbol = "x"
 check_symbol = "+"
 cross_river_symbol = ".s"
 
+check_specifier = indirect_check_specifier / direct_check_specifier
 indirect_check_specifier = "?"
 direct_check_specifier = "!"
-check_specifier = indirect_check_specifier / direct_check_specifier
+
 
 confirm_symbol = "ok"
 cancel_symbol = "ko"

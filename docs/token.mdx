@@ -22,18 +22,6 @@ Thay đổi đó là: **thứ tự của các cột là từ 1 đến 9, xét t�
 
 :::
 
-### Lệnh mở rộng: di chuyển
-
-:::info
-Đối với các lệnh mở rộng, có 3 nguyên tắc được tuân theo để xác định nước đi nào sẽ được thực hiện:
-
-1. Nếu lệnh xác định được nhiều hơn 1 khả năng di chuyển → **Không thực hiện lệnh đó**
-2. Nếu chỉ định của lệnh có thể xác định được nhiều hơn 1 quân, tuy nhiên kết quả cuối cùng chỉ là 1 khả năng di chuyển → **Thực hiện lệnh đó**
-3. Các lệnh nếu bỏ qua một vài tham số cụ thể, sẽ chọn tất cả các quân thoả mãn điều kiện. Ví dụ:
-   - Tốt tiến, bên màu đỏ đọc → Chọn tất cả các con tốt bên đỏ → Thực hiện lệnh theo nguyên tắc 1. và 2.
-
-:::
-
 ```abnf
 standard_movement_command = "std:" piece vertical_relative_position? column_number movement_direction (column_number / num_of_steps)
 ```
@@ -47,13 +35,124 @@ frontmid_pos = "tg"
 backmid_pos = "sg"
 ```
 
+```abnf
+piece = general_piece / soldier_piece / cannon_piece / horse_piece / elephant_piece / rook_piece / advisor_piece
+general_piece = "G" / "Tg"
+cannon_piece = "P"
+horse_piece = "M"
+elephant_piece = "T"
+soldier_piece = "B"
+rook_piece = "X"
+advisor_piece = "S"
+```
+
+```abnf
+movement_direction = forward_move / backward_move / sideways_move
+forward_move = "."
+backward_move = "/"
+sideways_move = "-"
+```
+
+```abnf
+column_number = [1-9]
+num_of_steps = [1-9]
+```
+
+### Lệnh mở rộng: di chuyển
+
+:::info
+Đối với các lệnh mở rộng, có 3 nguyên tắc được tuân theo để xác định nước đi nào sẽ được thực hiện:
+
+1. Nếu lệnh xác định được nhiều hơn 1 khả năng di chuyển → **Không thực hiện lệnh đó**
+2. Nếu chỉ định của lệnh có thể xác định được nhiều hơn 1 quân, tuy nhiên kết quả cuối cùng chỉ là 1 khả năng di chuyển → **Thực hiện lệnh đó**
+3. Các lệnh nếu bỏ qua một vài tham số cụ thể, sẽ chọn tất cả các quân thoả mãn điều kiện. Ví dụ:
+   - Tốt tiến, bên màu đỏ đọc → Chọn tất cả các con tốt bên đỏ → Thực hiện lệnh theo nguyên tắc 1. và 2.
+
+:::
+
+```abnf
+extended_movement_command = "ext:" piece extended_piece_position extended_movement_direction (column_number / num_of_steps)?
+```
+
+```abnf
+extended_piece_position = (extended_relative_position / column_number / extended_relative_position column_number / piece_tag)?
+```
+
+```abnf
+extended_relative_position = vertical_relative_position / left_pos / right_pos / leftmid_pos / rightmid_pos
+left_pos = "-t"
+right_pos = "-p"
+leftmid_pos = "-tg"
+rightmid_pos = "-pg"
+```
+
+```abnf
+piece_tag = circle_tag / square_tag / x_tag / y_tag / z_tag
+circle_tag = "#circle"
+square_tag = "#square"
+x_tag = "#x"
+y_tag = "#y"
+z_tag = "#z"
+```
+
+```abnf
+extended_movement_direction = movement_direction / forwardleft_move / forwardright_move / backwardleft_move / backwardright_move
+left_move = "-t"
+right_move = "-p"
+forwardleft_move = ".-t"
+forwardright_move = ".-p"
+backwardleft_move = "/-t"
+backwardright_move = "/-p"
+```
+
 ### Lệnh mở rộng: ăn quân
+
+```abnf
+extended_capture_command = "ext:" (piece extended_piece_position?)? capture_symbol (piece extended_piece_position?)?
+```
+
+```abnf
+capture_symbol = "x"
+```
 
 ### Lệnh mở rộng: chiếu tướng
 
+```abnf
+extended_check_command = "ext:" (piece extended_piece_position?)? check_symbol check_specifier? column_number?
+```
+
+```abnf
+check_symbol = "+"
+check_specifier = indirect_check_specifier / direct_check_specifier
+indirect_check_specifier = "?"
+direct_check_specifier = "!"
+```
+
 ### Lệnh mở rộng: sang sông
 
+```abnf
+extended_crossriver_command = "ext:" soldier_piece extended_piece_position? cross_river_symbol
+```
+
+```abnf
+cross_river_symbol = ".s"
+```
+
 ### Lệnh meta (siêu lệnh)
+
+```abnf
+meta_command = "meta:" (confirm_symbol / cancel_symbol / ask_for_draw_symbol / ask_for_change_side_symbol / ask_for_takeback_symbol / resign_symbol / new_game_symbol)
+```
+
+```abnf
+confirm_symbol = "ok"
+cancel_symbol = "ko"
+ask_for_draw_symbol = "="
+ask_for_change_side_symbol = "><"
+ask_for_takeback_symbol = "<"
+resign_symbol = "$"
+new_game_symbol = "^"
+```
 
 ## Cú pháp
 
@@ -410,7 +509,3 @@ backmid_pos = "sg"
 ![new_game_symbol](.\token/new_game_symbol.svg)
 
 Được sử dụng bởi: [meta_command](#meta_command)
-
-```
-
-```
