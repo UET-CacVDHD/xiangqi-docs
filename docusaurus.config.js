@@ -62,7 +62,7 @@ const config = {
             label: "Tài liệu cờ tướng",
           },
           {
-            href: "https://github.com/facebook/docusaurus",
+            href: "https://github.com/UET-CacVDHD/xiangqi-docs",
             label: "GitHub",
             position: "right",
           },
