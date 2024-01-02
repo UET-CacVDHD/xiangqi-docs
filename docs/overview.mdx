@@ -1,0 +1,47 @@
+---
+slug: /
+---
+
+# Tổng quan
+
+## Giới thiệu
+
+Cờ tướng là một trò chơi dân gian phổ biến ở Việt Nam.
+
+Chúng tôi muốn nâng tầm trải nghiệm của người chơi bằng cách tạo ra một **trò chơi cờ tướng thực tế ảo (VR)** cho phép người chơi có thể chơi cờ tướng với nhau giống như trải nghiệm ngoài đời. Ngoài ra chúng tôi cũng muốn trải nghiệm của người chơi đơn giản nhất có thể, qua việc **sử dụng giọng nói để điều khiển các quân cờ** (ý tưởng giống với [một phân cảnh trong bộ phim Harry Potter](https://www.youtube.com/watch?v=NSz34P9rWjM)). Tất nhiên người chơi cũng có thể sử dụng các phương pháp truyền thống như bàn phím hoặc chuột, hoặc tay cầm VR.
+
+## Kiến trúc hệ thống
+
+Hệ thống được xây dựng gồm 2 thành phần chính là **Game cờ tướng VR** và **AI nhận diện giọng nói cờ tướng**.
+
+Cốt lõi của **Game cờ tướng VR**:
+- Tập trung cải thiện trải nghiệm đắm chìm bằng các cơ chế locomotion (di chuyển trong thế giới ảo)
+- Xây dựng 1 cơ chế để detect voice activity (kích hoạt bằng giọng nói)
+- Tương tác với server backend để parse giọng nói
+- Parse cú pháp nhận được từ server backend theo [chuẩn PEG](./rules)
+
+Cốt lõi của **AI nhận diện giọng nói cờ tướng**:
+- Sử dụng SOTA nhận diện giọng nói với độ chính xác cao. Dùng **Wav2Vec2** fine-tuning trên tiếng Việt
+- Dùng **Beam search** để giới hạn không gian tìm kiếm, nhăm tăng tốc độ và độ chính xác
+- Serve **stateless** qua HTTP
+
+
+
+## Clip minh hoạ
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pFroR0mmmMU?si=oMiMqRVQpBUmH9yM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen></iframe>
+
+## Các tài liệu liên quan
+
+- **Tài liệu đặc tả game cờ tướng: [Link](/paper_cotuong_vr+game+vad.pdf)**
+- **Tài liệu đặc tả AI cờ tướng: [Link](/paper_cotuong_stt-ai.pdf)**
+
+- **(Quan trọng) Nháp của 2 nhóm, bàn về design và implementation các thứ: [Link](https://docs.google.com/document/d/1NlM7JW_A1bLQHha4NCDXnjuT1PHlQJJrLFDyT1FHzN0/edit)**
+
+- Slide thuyết trình dự án cờ tướng: [Link](https://docs.google.com/presentation/d/1DAvsflY_6YF1h2KIYMATWUdIeZxoYedO6KkrDb3WAlM/edit?usp=sharing)
+- Slide thuyết trình tổng quát về VR: [Link](https://docs.google.com/presentation/d/1WQEbaLAfjC0jvG3e-IIHPF-DcqeBFHjKV3R_MfLR9Rw/edit?usp=sharing)
+
+- Repo:
+    - Game cờ tướng VR: [Link](https://github.com/UET-CacVDHD/xiangqi-vr)
+    - AI cờ tướng + backend: [Link](https://github.com/UET-CacVDHD/xiangqi-ai)
+    - API tester cho AI: [Link](https://github.com/UET-CacVDHD/test-push-to-talk)
+
